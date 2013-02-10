@@ -60,10 +60,17 @@ prompt_end() {
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
-  local user=`whoami`
+  local user=`whoami` part
 
   if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment default default "%(!.%{%F{yellow}%}.)%B%F{cyan}%T %F{red}$user%F{yellow}@%F{white}%m%b"
+    part="%(!.%{%F{yellow}%}.)%B%F{cyan}%T "
+    if [[ "$user" == "root" ]]; then
+        part="$part%F{blue}"
+    else
+        part="$part%F{red}"
+    fi
+    part="$part$user%F{yellow}@%F{white}%m%b" 
+    prompt_segment default default $part 
     CURRENT_BG='black'
   fi
 }
