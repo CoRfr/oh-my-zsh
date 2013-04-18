@@ -69,7 +69,22 @@ prompt_context() {
     else
         part="$part%F{red}"
     fi
-    part="$part$user%F{yellow}@%F{white}%m%b" 
+    part="$part$user%F{white}@"
+    
+    if [[ $HOST == "FRILM-EL-15661-LNX" ]]; then
+        part="$part$FG[166]"
+    elif [[ $HOST == "FRILM-ED-14177-LNX" ]]; then
+        part="$part$FG[172]"
+    elif [[ $HOST == "CARMD-EV-CTO01" ]]; then
+        part="$part$FG[062]"
+    elif [[ $HOST == "frilm-lnxcpl03" ]]; then
+        part="$part$FG[189]"
+    elif [[ $HOST == "frilm-lnxlegato01" ]]; then
+        part="$part$FG[077]"
+    else
+        part="$part%F{yellow}"
+    fi
+    part="$part%m%b"
     prompt_segment default default $part 
     CURRENT_BG='black'
   fi
