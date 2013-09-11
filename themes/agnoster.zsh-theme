@@ -71,16 +71,16 @@ prompt_context() {
     fi
     part="$part$user%F{white}@"
     
-    if [[ $HOST == "FRILM-EL-15661-LNX" ]]; then
+    if [[ $HOST == "frilm-el-broussel" ]]; then
         part="$part$FG[033]"
-    elif [[ $HOST == "FRILM-ED-14177-LNX" ]]; then
-        part="$part$FG[172]"
     elif [[ $HOST == "CARMD-EV-CTO01" ]]; then
         part="$part$FG[062]"
     elif [[ $HOST == "frilm-lnxcpl03" ]]; then
         part="$part$FG[051]"
     elif [[ $HOST == "frilm-lnxlegato01" ]]; then
         part="$part$FG[077]"
+    elif [[ $HOST == "eiga64" ]]; then
+        part="$part$FG[172]"
     else
         part="$part%F{yellow}"
     fi
