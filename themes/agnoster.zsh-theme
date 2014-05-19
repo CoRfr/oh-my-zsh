@@ -79,6 +79,8 @@ prompt_context() {
         part="$part$FG[051]"
     elif [[ $HOST == "frilm-lnxlegato01" ]]; then
         part="$part$FG[077]"
+    elif [[ $HOST == "frilm-ev-lxlegato01" ]]; then
+        part="$part$FG[036]"
     elif [[ $HOST == "eiga64" ]]; then
         part="$part$FG[172]"
     else
