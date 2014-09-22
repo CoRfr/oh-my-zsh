@@ -82,9 +82,9 @@ prompt_context() {
     elif [[ $HOST == "frilm-ev-lxlegato01" ]]; then
         part="$part$FG[036]"
     elif [[ $HOST == "cor-xps" ]]; then
-        part="$part$FG[051]"
-    elif [[ $HOST == "cor-pi" ]]; then
         part="$part$FG[172]"
+    elif [[ $HOST == "cor-pi" ]]; then
+        part="$part$FG[051]"
     else
         part="$part%F{yellow}"
     fi
