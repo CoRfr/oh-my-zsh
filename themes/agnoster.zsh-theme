@@ -71,7 +71,7 @@ prompt_context() {
     fi
     part="$part$user%F{white}@"
     
-    if [[ $HOST == "frilm-el-broussel" ]]; then
+    if [[ $HOST == "carmd-el-broussel" ]]; then
         part="$part$FG[033]"
     elif [[ $HOST == "CARMD-EV-CTO01" ]]; then
         part="$part$FG[062]"
@@ -81,7 +81,9 @@ prompt_context() {
         part="$part$FG[077]"
     elif [[ $HOST == "frilm-ev-lxlegato01" ]]; then
         part="$part$FG[036]"
-    elif [[ $HOST == "eiga64" ]]; then
+    elif [[ $HOST == "cor-xps" ]]; then
+        part="$part$FG[051]"
+    elif [[ $HOST == "cor-pi" ]]; then
         part="$part$FG[172]"
     else
         part="$part%F{yellow}"
