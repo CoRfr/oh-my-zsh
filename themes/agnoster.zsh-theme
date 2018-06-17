@@ -87,42 +87,38 @@ prompt_context() {
         part="$part%F{red}"
     fi
     part="$part$USER%F{white}@"
-    
+
     if [[ $HOST == "carmd-el-broussel" ]]; then
         part="$part$FG[033]"
-    elif [[ $HOST == "CARMD-EV-CTO01" ]]; then
-        part="$part$FG[062]"
-    elif [[ $HOST == "frilm-lnxcpl03" ]]; then
+    elif [[ $HOST == "carmd-ed-broussel" ]]; then
         part="$part$FG[051]"
-    elif [[ $HOST == "frilm-lnxlegato01" ]]; then
-        part="$part$FG[077]"
-    elif [[ $HOST == "frilm-ev-lxlegato01" ]]; then
-        part="$part$FG[036]"
-    elif [[ $HOST == "cor-xps" ]]; then
+    elif [[ $HOST == "cor-asus" ]]; then
         part="$part$FG[172]"
+    elif [[ $HOST == "cor-nas" ]]; then
+        part="$part$FG[036]"
     elif [[ $HOST == "cor-pi" ]]; then
         part="$part$FG[051]"
     else
         part="$part%F{yellow}"
     fi
     part="$part%m%b"
-    prompt_segment default default $part 
+    prompt_segment default default $part
     CURRENT_BG='black'
   fi
 }
 
 # Git: branch/detached head, dirty status
 prompt_git() {
-
+  (( $+commands[git] )) || return
   local PL_BRANCH_CHAR
   () {
     local LC_ALL="" LC_CTYPE="en_US.UTF-8"
     PL_BRANCH_CHAR=$'\ue0a0'         # 
   }
   local ref dirty mode repo_path
-  repo_path=$(git rev-parse --git-dir 2>/dev/null)
 
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    repo_path=$(git rev-parse --git-dir 2>/dev/null)
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
     if [[ -n $dirty ]]; then
@@ -154,8 +150,31 @@ prompt_git() {
   fi
 }
 
+prompt_bzr() {
+    (( $+commands[bzr] )) || return
+    if (bzr status >/dev/null 2>&1); then
+        status_mod=`bzr status | head -n1 | grep "modified" | wc -m`
+        status_all=`bzr status | head -n1 | wc -m`
+        revision=`bzr log | head -n2 | tail -n1 | sed 's/^revno: //'`
+        if [[ $status_mod -gt 0 ]] ; then
+            prompt_segment yellow black
+            echo -n "bzr@"$revision "✚ "
+        else
+            if [[ $status_all -gt 0 ]] ; then
+                prompt_segment yellow black
+                echo -n "bzr@"$revision
+
+            else
+                prompt_segment green black
+                echo -n "bzr@"$revision
+            fi
+        fi
+    fi
+}
+
 prompt_hg() {
-  local rev status
+  (( $+commands[hg] )) || return
+  local rev st branch
   if $(hg id >/dev/null 2>&1); then
     if $(hg prompt >/dev/null 2>&1); then
       if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
@@ -224,6 +243,7 @@ build_prompt() {
   prompt_context
   prompt_dir
   prompt_git
+  prompt_bzr
   prompt_hg
   prompt_end
 }
