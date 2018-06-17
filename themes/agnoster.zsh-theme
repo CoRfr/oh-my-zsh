@@ -91,9 +91,9 @@ prompt_context() {
     if [[ $HOST == "carmd-el-broussel" ]]; then
         part="$part$FG[033]"
     elif [[ $HOST == "carmd-ed-broussel" ]]; then
-        part="$part$FG[051]"
-    elif [[ $HOST == "cor-asus" ]]; then
-        part="$part$FG[172]"
+        part="$part%F{blue}"
+    elif [[ $HOST == "frilm-lnxlegato01" ]]; then
+        part="$part%F{green}"
     elif [[ $HOST == "cor-nas" ]]; then
         part="$part$FG[036]"
     elif [[ $HOST == "cor-pi" ]]; then
